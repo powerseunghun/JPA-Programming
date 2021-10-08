@@ -19,6 +19,8 @@
             <property name="hibernate.id.new_generator_mappings" value="true" />
             <property name="hibernate.hbm2ddl.auto" value="create" />
             
+            <!-- <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy" /> -->
+            
             <!-- 기본 매핑 이름 -->
             <!-- <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy" />  -->
 
