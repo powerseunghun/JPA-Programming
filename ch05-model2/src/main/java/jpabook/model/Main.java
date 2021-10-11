@@ -5,11 +5,29 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import jpabook.model.entity.MemberTest;
+import jpabook.model.entity.TeamTest;
+
+
 /**
  * Created by 1001218 on 15. 4. 5..
  */
 public class Main {
-
+	static void testSave(EntityManager em) {
+		// 팀1 저장
+		TeamTest team1 = new TeamTest("team1", "팀1");
+		em.persist(team1);
+		
+		// 회원1 저장
+		MemberTest member1 = new MemberTest("member1", "회원1");
+		member1.setTeam(team1);    // 연관관계 설정 member1 - team1
+		em.persist(member1);
+		
+		// 회원2 저장
+		MemberTest member2 = new MemberTest("member2", "회원2");
+		member2.setTeam(team1);    // 연관관계 설정 member2 - team1
+		em.persist(member2);
+	}
     public static void main(String[] args) {
 
         //엔티티 매니저 팩토리 생성
@@ -18,10 +36,13 @@ public class Main {
 
         EntityTransaction tx = em.getTransaction(); //트랜잭션 기능 획득
 
+        
         try {
-
             tx.begin(); //트랜잭션 시작
             //TODO 비즈니스 로직
+            System.out.println("E");
+            testSave(em);
+            
             tx.commit();//트랜잭션 커밋
 
         } catch (Exception e) {
@@ -33,5 +54,4 @@ public class Main {
 
         emf.close(); //엔티티 매니저 팩토리 종료
     }
-
 }
