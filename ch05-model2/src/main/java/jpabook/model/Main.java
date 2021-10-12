@@ -1,5 +1,7 @@
 package jpabook.model;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -13,7 +15,7 @@ import jpabook.model.entity.TeamTest;
  * Created by 1001218 on 15. 4. 5..
  */
 public class Main {
-	static void testSave(EntityManager em) {
+	private static void testSave(EntityManager em) {
 		// 팀1 저장
 		TeamTest team1 = new TeamTest("team1", "팀1");
 		em.persist(team1);
@@ -28,6 +30,55 @@ public class Main {
 		member2.setTeam(team1);    // 연관관계 설정 member2 - team1
 		em.persist(member2);
 	}
+	private static void queryLogicJoin(EntityManager em) {
+		String jpql = "select m from MemberTest m join m.team t where " + "t.name=:teamName";
+		
+		List<MemberTest> resultList = em.createQuery(jpql, MemberTest.class).setParameter("teamName", "팀1").getResultList();
+		
+		System.out.println(resultList.size());
+		for (MemberTest m : resultList) {
+			System.out.println("[query] member.username=" + m.getUsername());
+		}
+	}
+	private static void updateRelation(EntityManager em) {
+		// new team2;
+		TeamTest team2 = new TeamTest("team2", "팀2");
+		em.persist(team2);
+		
+		// team2 setting to member1
+		MemberTest member = em.find(MemberTest.class, "member1");
+		member.setTeam(team2);
+	}
+	private static void deleteRelation(EntityManager em) {
+		MemberTest member1 = em.find(MemberTest.class, "member1");
+		member1.setTeam(null);
+	}
+//	private static void biDirection(EntityManager em) {
+//		MemberTest mm = em.find(MemberTest.class, "member1");
+//		MemberTest mmm = em.find(MemberTest.class, "member2");
+//		TeamTest team = em.find(TeamTest.class, mm.getTeam().getId());
+//		System.out.println(mm.getId() + " , " + mm.getUsername() + " , " + mm.getTeam().getId());
+//		System.out.println(mmm.getId() + " , " + mmm.getUsername() + " , " + mmm.getTeam().getId());
+//		List<MemberTest> members = team.getMembers();
+//		System.out.println("findTeam : " + team.getId() + ", teamName : " + team.getName() + " , memberSize : " + team.getMembers().size());
+//		
+//		for (MemberTest m : members) {
+//			System.out.println("member.username = " + m.getUsername());
+//		}
+//	}
+	private static void biDirection(EntityManager em) {
+//		MemberTest findMember = em.find(MemberTest.class, "member1");
+//		System.out.println("findMember : " + findMember.getId() + ", " + findMember.getUsername() + ", " + findMember.getTeam().getId());
+//		List<MemberTest> members = em.find(TeamTest.class, findMember.getTeam().getId()).getMembers();
+//		System.out.println("members size : " + members.size());
+		TeamTest findTeam = em.find(TeamTest.class, "team1");
+		List<MemberTest> members = findTeam.getMembers();
+		
+		System.out.println("members size : " + members.size());
+		for (MemberTest m : members) {
+			System.out.println("member.username : " + m.getUsername());
+		}
+	}
     public static void main(String[] args) {
 
         //엔티티 매니저 팩토리 생성
@@ -36,13 +87,16 @@ public class Main {
 
         EntityTransaction tx = em.getTransaction(); //트랜잭션 기능 획득
 
-        
         try {
             tx.begin(); //트랜잭션 시작
             //TODO 비즈니스 로직
-            System.out.println("E");
+            // System.out.println("E");
             testSave(em);
-            
+            // queryLogicJoin(em);
+            // updateRelation(em);
+            // deleteRelation(em);
+            biDirection(em);
+            System.out.println("END");
             tx.commit();//트랜잭션 커밋
 
         } catch (Exception e) {

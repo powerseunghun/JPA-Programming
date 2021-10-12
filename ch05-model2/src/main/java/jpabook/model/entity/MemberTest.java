@@ -15,6 +15,7 @@ public class MemberTest {
 		this.id = id;
 		this.username = username;
 	}
+	
 	@ManyToOne
 	@JoinColumn(name="TEAM_ID")
 	private TeamTest team;
@@ -40,6 +41,10 @@ public class MemberTest {
 	}
 
 	public void setTeam(TeamTest team) {
+		if (this.team != null) {
+			this.team.getMembers().remove(this);
+		}
 		this.team = team;
+		team.getMembers().add(this);
 	}
 }
