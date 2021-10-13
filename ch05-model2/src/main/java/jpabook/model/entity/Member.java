@@ -1,74 +1,70 @@
 package jpabook.model.entity;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by holyeye on 2014. 3. 11..
- */
+import javax.persistence.*;
+
 @Entity
 public class Member {
+	@Id @GeneratedValue
+	@Column(name = "MEMBER_ID")
+	private Long id;
+	
+	private String name;
+	
+	private String city;
+	private String street;
+	private String zipcode;
+	
+	@OneToMany(mappedBy="member")
+	private List<Order> orders = new ArrayList<Order>();
 
-    @Id @GeneratedValue
-    @Column(name = "MEMBER_ID")
-    private Long id;
+	public Long getId() {
+		return id;
+	}
 
-    private String name;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    private String city;
-    private String street;
-    private String zipcode;
+	public String getName() {
+		return name;
+	}
 
-    @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<Order>();
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    //Getter, Setter
-    public Long getId() {
-        return id;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getStreet() {
+		return street;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setStreet(String street) {
+		this.street = street;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public String getZipcode() {
+		return zipcode;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
 
-    public String getStreet() {
-        return street;
-    }
+	public List<Order> getOrders() {
+		return orders;
+	}
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
 }
