@@ -164,7 +164,7 @@ public class Main {
             // deleteRelation(em);
             // biDirection(em);
             // testPureObject_BiDirection(em);
-            testORM_BiDirection(em);
+//            testORM_BiDirection(em);
             System.out.println("END");
             tx.commit();//트랜잭션 커밋
 
