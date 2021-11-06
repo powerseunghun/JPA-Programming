@@ -8,15 +8,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-public class MemberOneToOne {
+public class MemberOneToOneBiDir {
 	@Id @GeneratedValue
-	@Column(name = "MEMBEROTO_ID")
+	@Column(name="MEMBEROTOBI_ID")
 	private Long id;
+	
 	private String username;
 	
 	@OneToOne
-	@JoinColumn(name="LOCKEROTO_ID")
-	private LockerOneToOne locker;
+	@JoinColumn(name="LOCKEROTOBI_ID")
+	private LockerOneToOneBiDir locker;
 
 	public Long getId() {
 		return id;
@@ -34,11 +35,11 @@ public class MemberOneToOne {
 		this.username = username;
 	}
 
-	public LockerOneToOne getLocker() {
+	public LockerOneToOneBiDir getLocker() {
 		return locker;
 	}
 
-	public void setLocker(LockerOneToOne locker) {
+	public void setLocker(LockerOneToOneBiDir locker) {
 		this.locker = locker;
 	}
 }
