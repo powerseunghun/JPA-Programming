@@ -8,9 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import jpabook.model.entity.MemberManyToMany;
-import jpabook.model.entity.MemberTest;
 import jpabook.model.entity.ProductManyToMany;
-import jpabook.model.entity.TeamTest;
 
 public class Main {
 	static void ManyToManySave(EntityManager em) {
@@ -33,16 +31,16 @@ public class Main {
 		}
 	}
 	static void testSave(EntityManager em) {
-		MemberTest member1 = new MemberTest("member1");
-		MemberTest member2 = new MemberTest("member2");
-		
-		TeamTest team1 = new TeamTest("team1");
-		team1.getMembers().add(member1);
-		team1.getMembers().add(member2);
-		
-		em.persist(member1);
-		em.persist(member2);
-		em.persist(team1);
+//		MemberTest member1 = new MemberTest("member1");
+//		MemberTest member2 = new MemberTest("member2");
+//		
+//		TeamTest team1 = new TeamTest("team1");
+//		team1.getMembers().add(member1);
+//		team1.getMembers().add(member2);
+//		
+//		em.persist(member1);
+//		em.persist(member2);
+//		em.persist(team1);
 	}
     public static void main(String[] args) {
 
@@ -57,7 +55,7 @@ public class Main {
             tx.begin(); //트랜잭션 시작
             //TODO 비즈니스 로직
 //            testSave(em);
-            
+            ManyToManySave(em);
             
             tx.commit();//트랜잭션 커밋
 

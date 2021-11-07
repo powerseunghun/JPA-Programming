@@ -3,7 +3,9 @@ package jpabook.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -22,7 +24,7 @@ public class MemberManyToMany {
 	 * @JoinTable.joinColumns: 현재 방향인 회원과 매핑할 조인 컬럼 정보 지정
 	 * @JoinTable.inverseJoinColumns: 반대 방향인 상품과 매핑할 조인 컬럼 정보 지정
 	 */
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.REFRESH)
 	@JoinTable(name = "MEMBER_PRODUCT", 
 			   joinColumns=@JoinColumn(name = "MEMBERMTM_ID"), 
 			   inverseJoinColumns = @JoinColumn(name = "PRODUCTMTM_ID"))
